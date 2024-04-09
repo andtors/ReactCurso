@@ -2,7 +2,9 @@ import './App.css'
 
 import Itaquera from './assets/itaquera.webp'
 
+import ConditionalRender from './components/ConditionalRender'
 import ManageData from './components/ManageData'
+import ListRender from './components/ListRender'
 
 function App() {
 
@@ -23,6 +25,9 @@ function App() {
       <hr />
       <ManageData />
       <hr />
+      <ListRender />
+      <hr />
+      <ConditionalRender />
     </>
   )
 }
