@@ -1,0 +1,16 @@
+#root {
+  max-width: auto;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer{
+  height: 40px;
+  background-color: yellow;
+  color: black;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  font-size: 40px;
+  text-align: left;
+}
