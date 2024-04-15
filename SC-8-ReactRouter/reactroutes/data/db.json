@@ -1,0 +1,19 @@
+{
+    "products": [
+      {
+        "id": "1",
+        "name": "Camisa",
+        "price": 59.99
+      },
+      {
+        "id": "2",
+        "name": "Caneta",
+        "price": 9.99
+      },
+      {
+        "id": "3",
+        "name": "Monitor",
+        "price": 99.99
+      }
+    ]
+  }
