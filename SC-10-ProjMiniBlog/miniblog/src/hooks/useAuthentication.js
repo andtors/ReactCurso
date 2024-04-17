@@ -44,6 +44,8 @@ export const useAuthentication = () => {
                 displayName: data.displayName
             })
 
+            console.log("User created with displayName", user.displayName)
+
             setLoading(false);
 
             return user
@@ -83,6 +85,8 @@ export const useAuthentication = () => {
                 await signInWithEmailAndPassword(auth, data.email, data.password)
 
                 setLoading(false)
+                const user = auth.currentUser
+                console.log(user.displayName)
             }catch(error){
 
                 let systemErrorMessage

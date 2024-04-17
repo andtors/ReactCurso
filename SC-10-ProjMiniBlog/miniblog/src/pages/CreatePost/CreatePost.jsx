@@ -1,8 +1,9 @@
 import React from 'react'
 
 import { useState } from 'react'
-import { Navigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import { useAuthValue } from '../../context/AuthContext'
+import { useInsertDocument } from '../../hooks/useInsertDocument'
 
 import styles from './CreatePost.module.css'
 
@@ -13,16 +14,54 @@ const CreatePost = () => {
     const [body, setBody] = useState("")
     const [tags, setTags] = useState([])
     const [formError, setFormError] = useState("")
+
+
+    const {user} = useAuthValue()
     
+    const navigate = useNavigate()
+
+    const {insertDocument, response} = useInsertDocument("posts")
+    
+   
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setFormError("")
+
+        // validate image URL
+        try{
+            new URL(image)
+        }catch(error){
+            setFormError("A imagem precisa ser uma URL")
+        }
+
+        // criar array de tags
+        const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase())
+
+        // checar todos os valores
+        if(!title || !image || !tags || !body){
+            setFormError("Por favor, preencha todos os campos!")
+        }
+
+        if(formError) return
+
+        insertDocument({
+            title,
+            image,
+            body,
+            tags: tagsArray,
+            uid: user.uid,
+            createdBy: user.displayName
+        })
+        
+        // redirect to home page
+        navigate("/")
     }
   return (
     <div className={styles.create_post}>
        <h2>Criar post</h2>
        <p>Escreva sobre o que quiser e compartilhe seu conhecimento!</p>
-       <form onSubtmit={handleSubmit}>
+       <form onSubmit={handleSubmit}>
         <label>
             <span>Título:</span>
             <input type="text" name="title"  required placeholder='Pense num bom titulo...' onChange={(e) => setTitle(e.target.value)} value={title}/>
@@ -39,14 +78,16 @@ const CreatePost = () => {
             <span>Tags:</span>
             <input type="text" name="tags"  required placeholder='Insira as tags separadas por virgula' onChange={(e) => setTags(e.target.value)} value={tags}/>
         </label>
-        <button className='btn' onClick={handleSubmit}>Cadastrar</button>
-        {/* 
-        {!loading && }
-          {loading && 
-          (<button className='btn' disabled>Aguarde...</button>
-          )}
-          {error && <p className="error">{error}</p>}
-          */}
+        
+        {!response.loading && <button className="btn">Criar post!</button>}
+        {response.loading && (
+          <button className="btn" disabled>
+            Aguarde.. .
+          </button>
+        )}
+        {(response.error || formError) && (
+          <p className="error">{response.error || formError}</p>
+        )}
        </form>
     </div>
   )

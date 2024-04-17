@@ -20,7 +20,7 @@ const insertReducer = (state, action) => {
     }
 }
 
-export const userInsertDocument = (docCollection) => {
+export const useInsertDocument = (docCollection) => {
 
     const [response, dispatch] = useReducer(insertReducer, initialState)
 
@@ -49,7 +49,7 @@ export const userInsertDocument = (docCollection) => {
 
             checkCancelBeforeDispatch({
                 type: "INSERTED_DOC",
-                payload: insertDocument
+                payload: insertedDocument
             })
 
         } catch (error) {
