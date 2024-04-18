@@ -10,9 +10,9 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
     // deal with memory leak
     const [cancelled, setCancelled] = useState(false)
 
-    useEffect(()=> {
+    useEffect(() => {
         async function loadData() {
-            if(cancelled) return
+            if (cancelled) return
 
             setLoading(true)
 
@@ -21,15 +21,16 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
             try {
                 // busca
                 let q
-                if(search) {
-                    q = await query(collectionRef, where("tags", "array-contains", search), orderBy("createdAt", "desc"))
+                if (search) {
+                    q = await query(collectionRef, where("tagsArray", "array-contains", search), orderBy("createdAt", "desc"))
+                } else if (uid) {
+                    q = await query(collectionRef, where("uid", "==", uid), orderBy("createdAt", "desc"))
                 } else {
                     q = await query(collectionRef, orderBy("createdAt", "desc"))
                 }
 
                 // dashboard
 
-                
 
                 await onSnapshot(q, (querySnapshot) => {
                     setDocuments(
@@ -40,7 +41,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
                     )
                 })
                 setLoading(false)
-            }catch (error){
+            } catch (error) {
                 console.log(error)
                 setError(error.message)
 
@@ -53,5 +54,5 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
-    return {documents, loading, error}
+    return { documents, loading, error }
 }
