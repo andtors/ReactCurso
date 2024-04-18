@@ -35,9 +35,6 @@ const CreatePost = () => {
             setFormError("A imagem precisa ser uma URL")
         }
 
-        // criar array de tags
-        const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase())
-
         // checar todos os valores
         if(!title || !image || !tags || !body){
             setFormError("Por favor, preencha todos os campos!")
@@ -49,10 +46,13 @@ const CreatePost = () => {
             title,
             image,
             body,
-            tags: tagsArray,
+            tagsArray,
             uid: user.uid,
             createdBy: user.displayName
         })
+
+        // criar array de tags
+        const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase())
         
         // redirect to home page
         navigate("/")
