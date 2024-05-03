@@ -13,7 +13,7 @@ export const useAuth = () => {
         } else {
             setAuth(false)
         }
-
+        
         setLoading(false)
     }, [user])
 

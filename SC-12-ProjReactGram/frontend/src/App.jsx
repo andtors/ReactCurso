@@ -16,6 +16,7 @@ import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
 
 import './App.css'
+import EditProfile from './pages/EditProfile/EditProfile'
 
 function App() {
   const {auth, loading} = useAuth()
@@ -30,6 +31,7 @@ function App() {
     <div className='container'>
     <Routes>
       <Route path="/" element={auth ? <Home /> : <Navigate to="/login" />}></Route>
+      <Route path="/profile" element={auth ? <EditProfile /> : <Navigate to="/login" />}></Route>
       <Route path="/login" element={!auth ? <Login /> : <Navigate to="/" />}></Route>
       <Route path="/register" element={!auth ? <Register /> : <Navigate to="/" />}></Route>
     </Routes>
