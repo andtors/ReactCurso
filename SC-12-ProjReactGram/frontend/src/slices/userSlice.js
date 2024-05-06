@@ -55,7 +55,7 @@ export const userSlice = createSlice({
             state.message = null
         }
     },
-    extraReducers: (builder => {
+    extraReducers: (builder) => {
         builder
             .addCase(profile.pending, (state) => {
                 state.loading = true;
@@ -93,7 +93,7 @@ export const userSlice = createSlice({
                 state.error = null;
                 state.user = action.payload;
             })
-    })
+    }
 })
 
 export const { resetMessage } = userSlice.actions

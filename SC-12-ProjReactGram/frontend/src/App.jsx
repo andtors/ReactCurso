@@ -15,9 +15,11 @@ import Home from './pages/Home/Home'
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
 import Profile from './pages/Profile/Profile'
+import Search from './pages/Search/Search'
 
 import './App.css'
 import EditProfile from './pages/EditProfile/EditProfile'
+import Photo from './pages/Photo/Photo'
 
 function App() {
   const {auth, loading} = useAuth()
@@ -36,6 +38,8 @@ function App() {
       <Route path="/users/:id" element={auth ? <Profile /> : <Navigate to="/login" />}></Route>
       <Route path="/login" element={!auth ? <Login /> : <Navigate to="/" />}></Route>
       <Route path="/register" element={!auth ? <Register /> : <Navigate to="/" />}></Route>
+      <Route path="/search" element={auth ? <Search /> : <Navigate to="/login" />}></Route>
+      <Route path="/photos/:id" element={auth ? <Photo /> : <Navigate to="/login" />}></Route>
     </Routes>
     </div>
     <Footer />
